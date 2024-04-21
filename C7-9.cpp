@@ -49,17 +49,43 @@ string Zipcode::encode(int zip) {
     //table of value
     int value[5] = { 7,4,2,1,0 };
     //transfer
-    for (int i = 4; i >= 0; i--) {
-        int digit = zip / pow(10, i);
-        zip %= (int)pow(10, i);
-        string group = "00000";
-        for (int j = 0; j < 5; ++j) {
-            if (digit >= value[j]) {
-                group[j] = '1';
-                digit -= value[j];
-            }
+    int digit;
+    for (int i = 0; i < 5; i++) {
+        digit = zip / pow(10, 5 - 1 - i);
+        digit %= 10;
+        switch (digit) {
+        case 0:
+            barcode += "11000";
+            break;
+        case 1:
+            barcode += "00011";
+            break;
+        case 2:
+            barcode += "00101";
+            break;
+        case 3:
+            barcode += "00110";
+            break;
+        case 4:
+            barcode += "01001";
+            break;
+        case 5:
+            barcode += "01010";
+            break;
+        case 6:
+            barcode += "01100";
+            break;
+        case 7:
+            barcode += "10001";
+            break;
+        case 8:
+            barcode += "10010";
+            break;
+        case 9:
+            barcode += "10100";
+            break;
         }
-        barcode += group;
+
     }
     //the last number is 1
     barcode += "1";
@@ -95,3 +121,5 @@ int Zipcode::getzipcode() {
 string Zipcode::getbarcode() {
     return barcode;
 }
+
+
